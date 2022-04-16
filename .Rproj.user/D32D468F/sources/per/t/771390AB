@@ -1,0 +1,24 @@
+{
+    "id": "771390AB",
+    "path": "~/Documents/work/aki_comprisks-alltimes/R/summarize.R",
+    "project_path": "R/summarize.R",
+    "type": "r_source",
+    "hash": "2603934392",
+    "contents": "",
+    "dirty": false,
+    "created": 1643416279270.0,
+    "source_on_save": true,
+    "relative_order": 2,
+    "properties": {
+        "cursorPosition": "72,42",
+        "scrollLine": "55"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1643923122,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1643923122115,
+    "read_only": false,
+    "read_only_alternatives": []
+}
