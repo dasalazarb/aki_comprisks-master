@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=comprisk_full
+#SBATCH --job-name=deathAsOutcome
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=40G
