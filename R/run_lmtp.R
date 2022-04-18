@@ -20,7 +20,7 @@ library(tidyverse)
 library(future)
 library(future.apply)
 library(earth)
-library(arm)
+#library(arm) ## revisar
 library(glmnet)
 library(speedglm)
 library(ranger)

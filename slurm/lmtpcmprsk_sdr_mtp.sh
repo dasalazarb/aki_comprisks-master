@@ -32,7 +32,7 @@
 #SBATCH --error=slurm.out
 #
 ## Command(s) to run:
-module load openblas/0.2.20 gcc/6.3.0 r/4.0.3 r-packages/default
+module load openblas/0.2.20 gcc/6.3.0 r/4.1.1 r-packages/default
 cd ~/lmtpcmprsk_aki/
 
 R CMD BATCH --no-save --no-restore \
