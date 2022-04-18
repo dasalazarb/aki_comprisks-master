@@ -8,5 +8,5 @@
 echo "$SLURM_ARRAY_TASK_ID"
 
 source ~/.bashrc
-spack load -r /bxc56dm
+spack load /wvljhbh
 R CMD BATCH 'run_lmtp_comprisks_full.R'

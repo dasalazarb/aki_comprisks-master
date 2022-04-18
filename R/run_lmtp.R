@@ -63,7 +63,7 @@ bs <- dat_lmtp %>% # baseline covariates
   select(-id, -fu, -event,
          -starts_with("L_"), -starts_with("C_"),
          -starts_with("Y_"), -starts_with("A_"),
-         -starts_with("I_"), -starts_with("CR_"),
+         -starts_with("I_"), #-starts_with("CR_"),
          -starts_with("H_")) %>% names()
 y <- paste0("Y_",padded_days_out) # outcome (AKI)
 # cr <- paste0("CR_",padded_days_out) # competing risk (death)
