@@ -2,7 +2,7 @@ spack find -v -l r
 
 spack load /wvljhbh
 
-srun -n1 --pty --partition=panda --mem=10G bash -i
+## srun -n1 --pty --partition=panda --mem=10G bash -i
 
 rm -rf aki_comprisks-master/
 git init

@@ -1,10 +1,12 @@
 #!/bin/bash
 #SBATCH --job-name=deathAsOutcome
+#SBATCH --partition=panda
+#SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=10G
+#SBATCH --mem=20G
 #SBATCH --partition=panda
-#SBATCH --array=1-8
+#SBATCH --array=1-10
 ## Command(s) to run:
 echo "$SLURM_ARRAY_TASK_ID"
 
