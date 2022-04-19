@@ -2,7 +2,7 @@
 #SBATCH --job-name=deathAsOutcome
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=8G
+#SBATCH --mem=10G
 #SBATCH --partition=panda
 #SBATCH --array=1-8
 ## Command(s) to run:
