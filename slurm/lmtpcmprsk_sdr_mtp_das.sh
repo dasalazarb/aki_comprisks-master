@@ -13,7 +13,8 @@ source ~/.bashrc
 spack load /wvljhbh
 ## module load openblas/0.2.20 gcc/6.3.0 r/4.0.3 r-packages/default
 ## k7ewedg openblas@0.3.8~ilp64+pic+shared threads=none
-spack load /k7ewedg
+## spack load /k7ewedg
+module load openblas/0.2.20 gcc/6.3.0 r/4.1.1 r-packages/default
 cd ~/aki_comprisks-master/
 
 R CMD BATCH --no-save --no-restore \
