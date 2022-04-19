@@ -8,8 +8,8 @@ rm -rf aki_comprisks-master/
 git init
 git clone https://github.com/dasalazarb/aki_comprisks-master.git
 
-cd aki_comprisks-master/slurm/
-sbatch lmtpcmprsk_sdr_mtp_das.sh
+## cd aki_comprisks-master/slurm/
+sbatch aki_comprisks-master/slurm/lmtpcmprsk_sdr_mtp_das.sh
 
 ## check the process submitted
 squeue -u das4019
