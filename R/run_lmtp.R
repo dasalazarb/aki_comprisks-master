@@ -48,7 +48,7 @@ k <- 2
 results_folder <- Sys.Date()
 trim_num <- str_split(as.character(trim),"\\.")[[1]][2]
 
-folder_to_save <- paste0("/home/das4019/comprisks/results/", results_folder)
+folder_to_save <- paste0("/home/das4019/aki_comprisks-master/results/", results_folder)
 dir.create(file.path(folder_to_save), showWarnings = FALSE)
 file_to_save <- paste0(task, "_tv_locf_", trim_num, "_k", k, "_f", folds, "_fullcohort.rds")
 
