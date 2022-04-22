@@ -1,17 +1,5 @@
 options(java.parameters = "-Xmx20000m") # expanding memory in cluster
 
-# read in command line arguments and print for logging
-args <- R.utils::commandArgs(
-  trailingOnly = TRUE,
-  asValues = TRUE,
-  defaults = list(
-    int_type = "mtp", # "static"
-    est_type = "sdr"  # "tmle"
-  )
-)
-
-print(args)
-
 # load packages and helpers
 library(here)
 library(sl3)
@@ -30,6 +18,18 @@ conflict_prefer("filter", "dplyr")
 conflict_prefer("select", "dplyr")
 source(here("R", "sl_lib.R"))
 set.seed(11249)
+
+# read in command line arguments and print for logging
+args <- R.utils::commandArgs(
+  trailingOnly = TRUE,
+  asValues = TRUE,
+  defaults = list(
+    int_type = "mtp", # "static"
+    est_type = "sdr"  # "tmle"
+  )
+)
+
+print(args)
 
 progressr::handlers(global = TRUE)
 set.seed(7)
