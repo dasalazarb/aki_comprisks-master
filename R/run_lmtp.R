@@ -1,5 +1,4 @@
-# set package library via renv
-renv::activate(here::here())
+options(java.parameters = "-Xmx20000m") # expanding memory in cluster
 
 # read in command line arguments and print for logging
 args <- R.utils::commandArgs(
@@ -10,6 +9,7 @@ args <- R.utils::commandArgs(
     est_type = "sdr"  # "tmle"
   )
 )
+
 print(args)
 
 # load packages and helpers
@@ -20,7 +20,7 @@ library(tidyverse)
 library(future)
 library(future.apply)
 library(earth)
-#library(arm) ## revisar
+#library(arm) ## error
 library(glmnet)
 library(speedglm)
 library(ranger)
@@ -31,10 +31,34 @@ conflict_prefer("select", "dplyr")
 source(here("R", "sl_lib.R"))
 set.seed(11249)
 
+progressr::handlers(global = TRUE)
+set.seed(7)
+
+task <- as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID"))
+
+plan(multicore)
+
+dat_lmtp <- read_rds(here::here("data/derived/dat_final.rds")) 
+
+trim <- .995
+folds <- 10
+SL_folds <- 10
+k <- 2
+
+results_folder <- Sys.Date()
+trim_num <- str_split(as.character(trim),"\\.")[[1]][2]
+
+folder_to_save <- paste0("/home/das4019/comprisks/results/", results_folder)
+dir.create(file.path(folder_to_save), showWarnings = FALSE)
+file_to_save <- paste0(task, "_tv_locf_", trim_num, "_k", k, "_f", folds, "_fullcohort.rds")
+
+# set package library via renv
+# renv::activate(here::here())
+
 # useful constants
 trim <- 0.995     # propensity score trimming?
-folds <- 5        # "outer" folds for cross-fitting
-SL_folds <- 5     # "inner" folds for super learning
+folds <- 20        # "outer" folds for cross-fitting
+SL_folds <- 20     # "inner" folds for super learning
 k <- 2            # how much history is used at each t
 
 # parallelize and fix multithreading
@@ -48,8 +72,9 @@ if (availableCores() < 10L) {
     tweak(multicore, workers = SL_folds - 1L)
   ))
 }
-openblasctl::openblas_set_num_threads(1L)
-OpenMPController::omp_set_num_threads(1L)
+
+# openblasctl::openblas_set_num_threads(1L)
+# OpenMPController::omp_set_num_threads(1L)
 
 # load data and set outcome days window
 dat_lmtp <- read_rds(here("data", "derived", "dat_final.rds"))
