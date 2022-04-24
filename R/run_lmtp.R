@@ -27,39 +27,20 @@ args <- R.utils::commandArgs(
     int_type = "mtp", # "static"
     est_type = "sdr"  # "tmle"
   )
-)
-
-print(args)
-
-progressr::handlers(global = TRUE)
-set.seed(7)
+); print(args)
 
 task <- as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 
-plan(multicore)
-
 dat_lmtp <- read_rds(here::here("data/derived/dat_final.rds")) 
-
-trim <- .995
-folds <- 10
-SL_folds <- 10
-k <- 2
-
-results_folder <- Sys.Date()
-trim_num <- str_split(as.character(trim),"\\.")[[1]][2]
-
-folder_to_save <- paste0("/home/das4019/aki_comprisks-master/results/", results_folder)
-dir.create(file.path(folder_to_save), showWarnings = FALSE)
-file_to_save <- paste0(task, "_tv_locf_", trim_num, "_k", k, "_f", folds, "_fullcohort.rds")
-
-# set package library via renv
-# renv::activate(here::here())
 
 # useful constants
 trim <- 0.995     # propensity score trimming?
 folds <- 20        # "outer" folds for cross-fitting
 SL_folds <- 20     # "inner" folds for super learning
 k <- 2            # how much history is used at each t
+
+results_folder <- Sys.Date()
+trim_num <- str_split(as.character(trim),"\\.")[[1]][2]
 
 # parallelize and fix multithreading
 progressr::handlers(global = TRUE)
@@ -73,8 +54,10 @@ if (availableCores() < 10L) {
   ))
 }
 
-# openblasctl::openblas_set_num_threads(1L)
-# OpenMPController::omp_set_num_threads(1L)
+folder_to_save <- paste0("/home/das4019/aki_comprisks-master/results/", results_folder)
+dir.create(file.path(folder_to_save), showWarnings = FALSE)
+file_to_save <- paste0(task, "_tv_locf_", trim_num, "_k", k, "_f", folds, "_fullcohort.rds")
+
 
 # load data and set outcome days window
 dat_lmtp <- read_rds(here("data", "derived", "dat_final.rds"))
@@ -91,7 +74,6 @@ bs <- dat_lmtp %>% # baseline covariates
          -starts_with("I_"), #-starts_with("CR_"),
          -starts_with("H_")) %>% names()
 y <- paste0("Y_",padded_days_out) # outcome (AKI)
-# cr <- paste0("CR_",padded_days_out) # competing risk (death)
 censoring <- paste0("C_",padded_days) # observed at next time
 
 used_letters <- dat_lmtp %>% # letters for time varying
