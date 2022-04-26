@@ -30,6 +30,7 @@ args <- R.utils::commandArgs(
 ); print(args)
 
 task <- as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID"))
+plan(multicore)
 
 dat_lmtp <- read_rds(here::here("data/derived/dat_final.rds")) 
 
@@ -42,17 +43,17 @@ k <- 2            # how much history is used at each t
 results_folder <- Sys.Date()
 trim_num <- str_split(as.character(trim),"\\.")[[1]][2]
 
-# parallelize and fix multithreading
-progressr::handlers(global = TRUE)
-if (availableCores() < 10L) {
-  plan(multicore)
-} else {
-  # NOTE: bookkeeping for future topologies
-  plan(list(
-    tweak(multicore, workers = availableCores() %/% SL_folds),
-    tweak(multicore, workers = SL_folds - 1L)
-  ))
-}
+# # parallelize and fix multithreading
+# progressr::handlers(global = TRUE)
+# if (availableCores() < 10L) {
+#   plan(multicore)
+# } else {
+#   # NOTE: bookkeeping for future topologies
+#   plan(list(
+#     tweak(multicore, workers = availableCores() %/% SL_folds),
+#     tweak(multicore, workers = SL_folds - 1L)
+#   ))
+# }
 
 folder_to_save <- paste0("/home/das4019/aki_comprisks-master/results/", results_folder)
 dir.create(file.path(folder_to_save), showWarnings = FALSE)
