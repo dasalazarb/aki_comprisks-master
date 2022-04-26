@@ -4,7 +4,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=30G
+#SBATCH --mem=50G
 #SBATCH --array=1-20
 ## Command(s) to run:
 echo "$SLURM_ARRAY_TASK_ID"
