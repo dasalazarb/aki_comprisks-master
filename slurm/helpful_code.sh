@@ -10,9 +10,19 @@ git clone https://github.com/dasalazarb/aki_comprisks-master.git
 
 ## cd aki_comprisks-master/slurm/
 sbatch aki_comprisks-master/slurm/lmtpcmprsk_sdr_mtp_das.sh
+sbatch --exclude=node150,node158,node160,node108,node109 aki_comprisks-master/slurm/lmtpcmprsk_sdr_mtp_das.sh
+squeue -u das4019
+sacct -u das4019
+
+## to check out R
+cd aki_comprisks-master/results/
+vim run_lmtp_sdr_mtp_das.Rout
 
 ## check the process submitted
 squeue -u das4019
+
+## cancel job
+scancle JOBID
 
 ## this is a error:
 ## slurmstepd: error: task/cgroup: unable to add task[pid=6756] to memory cg '(null)'
