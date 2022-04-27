@@ -1,7 +1,9 @@
-options(java.parameters = "-Xmx20000m") # expanding memory in cluster
+#options(java.parameters = "-Xmx20000m") # expanding memory in cluster
 
 # load packages and helpers
 library(here)
+
+
 #library(sl3)
 library(lmtp)
 library(sl3)
