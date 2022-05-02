@@ -46,15 +46,16 @@
 #lrn_lasso <- Lrnr_glmnet$new(alpha = 1, stratify_cv = TRUE)
 #lrn_ridge <- Lrnr_glmnet$new(alpha = 0, stratify_cv = TRUE)
 lrn_enet <- Lrnr_glmnet$new(alpha = 0.5, stratify_cv = TRUE)
+lrn_mean <- Lrnr_mean$new()
 
 learners <- unlist(list(
   # lrn_earth, 
   #lrn_lasso,
   #lrn_ridge,
-  lrn_enet
+  #lrn_enet,
   # lrn_rpart,
   # lrnr_lgb,
-  # lrn_mean
+  lrn_mean
 ), recursive = TRUE)
 
 # # list learners + create stack for SL

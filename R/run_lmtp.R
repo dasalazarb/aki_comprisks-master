@@ -121,6 +121,9 @@ if (args$est_type == "sdr") {
   out_all_t <- future_lapply(seq_len(outcome_day), function(this_time) {
     # estimate survival probability under LMTP at given t
     # NOTE (special case): not really survival at t = 1, and package fails
+
+    record <- paste0("we are in ", this_time, " at ", str_replace_all(Sys.Date(), "-", ""))
+    save(object = recod, file = here("data", "results", paste0("day_",this_time,"_",str_replace_all(Sys.Date(), "-", ""),".rds")))
     out <-
       lmtp_sdr(
         dat_lmtp,
