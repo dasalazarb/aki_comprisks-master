@@ -39,7 +39,7 @@ dat_lmtp <- read_rds(here::here("data/derived/dat_final.rds"))
 
 # useful constants
 trim <- 0.995     # propensity score trimming?
-folds <- 1        # "outer" folds for cross-fitting
+folds <- 2        # "outer" folds for cross-fitting
 SL_folds <- 10    # "inner" folds for super learning
 k <- 2            # how much history is used at each t
 
