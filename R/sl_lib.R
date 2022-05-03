@@ -1,12 +1,12 @@
 # # set up SL library
-# mars_grid_params <- list(
-#   degree = c(2, 3),
-#   penalty = c(1, 2, 3)
-# )
-# mars_grid <- expand.grid(mars_grid_params, KEEP.OUT.ATTRS = FALSE)
-# mars_learner_grid <- apply(mars_grid, MARGIN = 1, function(tuning_params) {
-#   do.call(Lrnr_earth$new, as.list(tuning_params))
-# })
+ mars_grid_params <- list(
+   degree = c(2, 3),
+   penalty = c(1, 2, 3)
+ )
+mars_grid <- expand.grid(mars_grid_params, KEEP.OUT.ATTRS = FALSE)
+ lrn_earth <- apply(mars_grid, MARGIN = 1, function(tuning_params) {
+   do.call(Lrnr_earth$new, as.list(tuning_params))
+ })
 
 # # keeping it old school
 # mean_learner <- Lrnr_mean$new()
@@ -43,16 +43,16 @@
 # })
 
 
-#lrn_lasso <- Lrnr_glmnet$new(alpha = 1, stratify_cv = TRUE)
+lrn_lasso <- Lrnr_glmnet$new(alpha = 1, stratify_cv = TRUE)
 #lrn_ridge <- Lrnr_glmnet$new(alpha = 0, stratify_cv = TRUE)
 lrn_enet <- Lrnr_glmnet$new(alpha = 0.5, stratify_cv = TRUE)
 lrn_mean <- Lrnr_mean$new()
 
 learners <- unlist(list(
-  # lrn_earth, 
-  #lrn_lasso,
+  lrn_earth, 
+  lrn_lasso,
   #lrn_ridge,
-  #lrn_enet,
+  lrn_enet,
   # lrn_rpart,
   # lrnr_lgb,
   lrn_mean

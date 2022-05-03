@@ -39,8 +39,8 @@ dat_lmtp <- read_rds(here::here("data/derived/dat_final.rds"))
 
 # useful constants
 trim <- 0.995     # propensity score trimming?
-folds <- 20        # "outer" folds for cross-fitting
-SL_folds <- 20     # "inner" folds for super learning
+folds <- 1        # "outer" folds for cross-fitting
+SL_folds <- 10    # "inner" folds for super learning
 k <- 2            # how much history is used at each t
 
 results_folder <- Sys.Date()
@@ -123,7 +123,7 @@ if (args$est_type == "sdr") {
     # NOTE (special case): not really survival at t = 1, and package fails
 
     record <- paste0("we are in ", this_time, " at ", str_replace_all(Sys.Date(), "-", ""))
-    save(object = record, file = here("data", "results", paste0("day_",this_time,"_",str_replace_all(Sys.Date(), "-", ""),".rds")))
+    save(object = record, file = here("data", "results", paste0("day_",this_time,"_",str_replace_all(str_replace_all(Sys.time(), "-", ""), ":", "_"),".rds")))
     out <-
       lmtp_sdr(
         dat_lmtp,
