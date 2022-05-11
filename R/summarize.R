@@ -30,19 +30,19 @@ ci_type <- "simult" #"marginal"
 
 # load results
 results_files <- list(
-  "lmtp_mtp_sdr_tv_locf_995_k2_f5_fullcohort_20220502.rds"#,
-  #"lmtp_mtp_tmle_tv_locf_995_k2_f5_fullcohort_20220502.rds",
-  #"lmtp_static_sdr_tv_locf_995_k2_f5_fullcohort_20220502.rds",
-  #"lmtp_static_tmle_tv_locf_995_k2_f5_fullcohort_20220502.rds"
+  "lmtp_mtp_sdr_tv_locf_995_k2_f5_fullcohort_20220127.rds",
+  "lmtp_mtp_tmle_tv_locf_995_k2_f5_fullcohort_20220127.rds",
+  "lmtp_static_sdr_tv_locf_995_k2_f5_fullcohort_20220127.rds",
+  "lmtp_static_tmle_tv_locf_995_k2_f5_fullcohort_20220127.rds"
 )
 results_sdr_mtp <- read_rds(here("data", "results", results_files[[1]]))
-#results_tmle_mtp <- read_rds(here("data", "results", results_files[[2]]))
-#results_sdr_static <- read_rds(here("data", "results", results_files[[3]]))
-#results_tmle_static <- read_rds(here("data", "results", results_files[[4]]))
+results_tmle_mtp <- read_rds(here("data", "results", results_files[[2]]))
+results_sdr_static <- read_rds(here("data", "results", results_files[[3]]))
+results_tmle_static <- read_rds(here("data", "results", results_files[[4]]))
 
 # clean up results using helper functions
 sdr_summary <- summarize_results(
-  results_sdr_mtp,
+  results_sdr_mtp, results_sdr_static,
   ci_level = ci_level, ci_type = ci_type
 )
 tmle_summary <- summarize_results(
