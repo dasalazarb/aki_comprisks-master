@@ -16,4 +16,4 @@ cd ~/aki_comprisks-master/
 
 R CMD BATCH --no-save --no-restore \
   '--args int_type=static est_type=sdr' \
-  R/run_lmtp.R results/run_lmtp_sdr_mtp_das.Rout
+  R/run_lmtp.R results/run_lmtp_static_mtp_das.Rout
