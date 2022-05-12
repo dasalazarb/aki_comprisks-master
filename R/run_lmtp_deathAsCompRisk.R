@@ -35,8 +35,6 @@ args <- R.utils::commandArgs(
 task <- as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 plan(multicore)
 
-dat_lmtp <- read_rds(here::here("data/derived/dat_final_deathAsCompRisk.rds")) 
-
 # useful constants
 trim <- 0.995     # propensity score trimming?
 folds <- 2        # "outer" folds for cross-fitting
@@ -64,7 +62,7 @@ file_to_save <- paste0(task, "_tv_locf_", trim_num, "_k", k, "_f", folds, "_full
 
 
 # load data and set outcome days window
-dat_lmtp <- read_rds(here("data", "derived", "dat_final.rds"))
+dat_lmtp <- read_rds(here::here("data/derived/dat_final_deathAsCompRisk.rds")) 
 outcome_day <- 14
 padded_days <- str_pad(0:(outcome_day - 1), 2, pad = "0")
 padded_days_out <- str_pad(1:outcome_day, 2, pad = "0")
@@ -75,9 +73,10 @@ bs <- dat_lmtp %>% # baseline covariates
   select(-id, -fu, -event,
          -starts_with("L_"), -starts_with("C_"),
          -starts_with("Y_"), -starts_with("A_"),
-         -starts_with("I_"), #-starts_with("CR_"),
+         -starts_with("I_"), -starts_with("CR_"),
          -starts_with("H_")) %>% names()
 y <- paste0("Y_",padded_days_out) # outcome (AKI)
+cr <- paste0("CR_",padded_days_out) # competing risk (death)
 censoring <- paste0("C_",padded_days) # observed at next time
 
 used_letters <- dat_lmtp %>% # letters for time varying
@@ -121,9 +120,6 @@ if (args$est_type == "sdr") {
   out_all_t <- future_lapply(seq_len(outcome_day), function(this_time) {
     # estimate survival probability under LMTP at given t
     # NOTE (special case): not really survival at t = 1, and package fails
-
-    record <- paste0("we are in ", this_time, " at ", str_replace_all(Sys.Date(), "-", ""))
-    save(object = record, file = here("data", "results", paste0("day_",this_time,"_",str_replace_all(str_replace_all(Sys.time(), "-", ""), ":", "_"),".rds")))
     out <-
       lmtp_sdr(
         dat_lmtp,
