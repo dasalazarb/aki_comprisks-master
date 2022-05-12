@@ -15,6 +15,5 @@ spack load /wvljhbh # R
 cd ~/aki_comprisks-master/
 
 R CMD BATCH --no-save --no-restore \
-  '--args int_type=static est_type=sdr' \
+  '--args int_type=mtp est_type=sdr' \
   R/run_lmtp_deathAsCompRisk.R results/run_lmtp_static_mtp_das.Rout
-  

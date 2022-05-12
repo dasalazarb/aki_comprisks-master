@@ -8,6 +8,16 @@ rm -rf aki_comprisks-master/
 git init
 git clone https://github.com/dasalazarb/aki_comprisks-master.git
 
+sbatch --exclude=node150,node158,node160,node108,node109 aki_comprisks-master/slurm/lmtpcmprsk_dialysis_sdr_static_das.sh
+squeue -u das4019
+sacct -u das4019
+
+ls aki_comprisks-master/data/results
+
+rm -rf aki_comprisks-master/
+git init
+git clone https://github.com/dasalazarb/aki_comprisks-master.git
+
 sbatch --exclude=node150,node158,node160,node108,node109 aki_comprisks-master/slurm/lmtpcmprsk_sdr_static_das.sh
 squeue -u das4019
 sacct -u das4019
