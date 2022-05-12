@@ -35,8 +35,6 @@ args <- R.utils::commandArgs(
 task <- as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 plan(multicore)
 
-dat_lmtp <- read_rds(here::here("data/derived/dat_final.rds")) 
-
 # useful constants
 trim <- 0.995     # propensity score trimming?
 folds <- 2        # "outer" folds for cross-fitting
@@ -170,6 +168,8 @@ if (args$est_type == "sdr") {
   out_all_t <- future_lapply(seq_len(outcome_day), function(this_time) {
     # estimate survival probability under LMTP at given t
     # NOTE (special case): not really survival at t = 1, and package fails
+    record <- paste0("we are in ", this_time, " at ", str_replace_all(Sys.Date(), "-", ""))
+    save(object = record, file = here("data", "results", paste0("day_",this_time,"_",str_replace_all(str_replace_all(Sys.time(), "-", ""), ":", "_"),".rds")))
     out <-
       lmtp_tmle(
         dat_lmtp,

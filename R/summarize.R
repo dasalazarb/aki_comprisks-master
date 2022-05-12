@@ -30,25 +30,25 @@ ci_type <- "simult" #"marginal"
 
 # load results
 results_files <- list(
-  "lmtp_mtp_sdr_tv_locf_995_k2_f5_fullcohort_20220127.rds",
-  "lmtp_mtp_tmle_tv_locf_995_k2_f5_fullcohort_20220127.rds",
-  "lmtp_static_sdr_tv_locf_995_k2_f5_fullcohort_20220127.rds",
-  "lmtp_static_tmle_tv_locf_995_k2_f5_fullcohort_20220127.rds"
+  "lmtp_mtp_sdr_tv_locf_995_k2_f2_fullcohort_20220504.rds",
+  ".rds",
+  "lmtp_static_sdr_tv_locf_995_k2_f2_fullcohort_20220512.rds",
+  ".rds"
 )
 results_sdr_mtp <- read_rds(here("data", "results", results_files[[1]]))
-results_tmle_mtp <- read_rds(here("data", "results", results_files[[2]]))
+# results_tmle_mtp <- read_rds(here("data", "results", results_files[[2]]))
 results_sdr_static <- read_rds(here("data", "results", results_files[[3]]))
-results_tmle_static <- read_rds(here("data", "results", results_files[[4]]))
+# results_tmle_static <- read_rds(here("data", "results", results_files[[4]]))
 
 # clean up results using helper functions
 sdr_summary <- summarize_results(
   results_sdr_mtp, results_sdr_static,
   ci_level = ci_level, ci_type = ci_type
 )
-tmle_summary <- summarize_results(
-  results_tmle_mtp, results_tmle_static,
-  ci_level = ci_level, ci_type = ci_type
-)
+# tmle_summary <- summarize_results(
+#   results_tmle_mtp, results_tmle_static,
+#   ci_level = ci_level, ci_type = ci_type
+# )
 
 # create graphics of results
 p_surv_sdr <- sdr_summary$surv_est %>%
@@ -59,7 +59,7 @@ p_surv_sdr <- sdr_summary$surv_est %>%
       trt_type == "2" ~ "No intervention"
     )
   ) %>%
-  plot_surv(est_lab = "SDR")
+  plot_surv(est_lab = "SDR", title = "Estimated death Incidence")
 ggsave(p_surv_sdr, width = 12, height = 8,
        file = here("graphs", "sdr_surv_est.pdf"))
 
@@ -68,7 +68,7 @@ p_survdiff_sdr <- sdr_summary$diff_est %>%
     p_adj = p.adjust(pval, "bonferroni"),
   ) %>%
   select(-std_err, -test_stat, -pval) %>%
-  plot_survdiff(est_lab = "SDR")
+  plot_survdiff(est_lab = "SDR", title = "Estimated death Incidence Difference")
 ggsave(p_survdiff_sdr, width = 12, height = 8,
        file = here("graphs", "sdr_survdiff_est.pdf"))
 
