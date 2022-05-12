@@ -217,5 +217,5 @@ trim_num <- str_split(as.character(trim), "\\.")[[1]][2]
 date_stamp <- str_replace_all(Sys.Date(), "-", "")
 file_to_save <- paste0("lmtp_", args$int_type, "_", args$est_type,
                        "_tv_locf_", trim_num, "_k", k, "_f", folds,
-                       "_fullcohort_", date_stamp, ".rds")
+                       "_fullcohort_", date_stamp, "_dialysis.rds")
 saveRDS(object = out_all_t, file = here("data", "results", file_to_save))
