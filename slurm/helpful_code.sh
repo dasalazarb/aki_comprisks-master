@@ -22,11 +22,13 @@ sbatch --exclude=node150,node158,node160,node108,node109 aki_comprisks-master/sl
 squeue -u das4019
 sacct -u das4019
 
-## cd aki_comprisks-master/slurm/
-sbatch aki_comprisks-master/slurm/lmtpcmprsk_sdr_mtp_das.sh
-sbatch --exclude=node150,node158,node160,node108,node109 aki_comprisks-master/slurm/lmtpcmprsk_sdr_mtp_das.sh
-squeue -u das4019
-sacct -u das4019
+ls aki_comprisks-master/data/results
+
+# ## cd aki_comprisks-master/slurm/
+# sbatch aki_comprisks-master/slurm/lmtpcmprsk_sdr_mtp_das.sh
+# sbatch --exclude=node150,node158,node160,node108,node109 aki_comprisks-master/slurm/lmtpcmprsk_sdr_mtp_das.sh
+# squeue -u das4019
+# sacct -u das4019
 
 ## to check out R
 cd aki_comprisks-master/results/
