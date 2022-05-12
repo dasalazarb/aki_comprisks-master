@@ -35,7 +35,7 @@ args <- R.utils::commandArgs(
 task <- as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 plan(multicore)
 
-dat_lmtp <- read_rds(here::here("data/derived/dat_final_deathAsCompRirsk.rds")) 
+dat_lmtp <- read_rds(here::here("data/derived/dat_final_deathAsCompRisk.rds")) 
 
 # useful constants
 trim <- 0.995     # propensity score trimming?
