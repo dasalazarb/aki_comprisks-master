@@ -59,7 +59,7 @@ p_surv_sdr <- sdr_summary$surv_est %>%
       trt_type == "2" ~ "No intervention"
     )
   ) %>%
-  plot_surv(est_lab = "SDR", title = "Estimated death Incidence")
+  plot_surv(est_lab = "SDR", title = "Estimated Death Incidence")
 ggsave(p_surv_sdr, width = 12, height = 8,
        file = here("graphs", "sdr_surv_est.pdf"))
 
@@ -68,7 +68,7 @@ p_survdiff_sdr <- sdr_summary$diff_est %>%
     p_adj = p.adjust(pval, "bonferroni"),
   ) %>%
   select(-std_err, -test_stat, -pval) %>%
-  plot_survdiff(est_lab = "SDR", title = "Estimated death Incidence Difference")
+  plot_survdiff(est_lab = "SDR", title = "Estimated Death Incidence Difference")
 ggsave(p_survdiff_sdr, width = 12, height = 8,
        file = here("graphs", "sdr_survdiff_est.pdf"))
 
