@@ -30,9 +30,9 @@ ci_type <- "simult" #"marginal"
 
 # load results
 results_files <- list(
-  "lmtp_mtp_sdr_tv_locf_995_k2_f2_fullcohort_20220504.rds",
+  "lmtp_mtp_sdr_tv_locf_995_k2_f2_fullcohort_20220513_dialysis.rds",
   ".rds",
-  "lmtp_static_sdr_tv_locf_995_k2_f2_fullcohort_20220512.rds",
+  "lmtp_static_sdr_tv_locf_995_k2_f2_fullcohort_20220514_dialysis.rds",
   ".rds"
 )
 results_sdr_mtp <- read_rds(here("data", "results", results_files[[1]]))
@@ -61,7 +61,7 @@ p_surv_sdr <- sdr_summary$surv_est %>%
   ) %>%
   plot_surv(est_lab = "SDR", title = "Estimated Death Incidence")
 ggsave(p_surv_sdr, width = 12, height = 8,
-       file = here("graphs", "sdr_surv_est.pdf"))
+       file = here("graphs", "sdr_surv_est_dialysis.pdf"))
 
 p_survdiff_sdr <- sdr_summary$diff_est %>%
   mutate(
@@ -70,12 +70,12 @@ p_survdiff_sdr <- sdr_summary$diff_est %>%
   select(-std_err, -test_stat, -pval) %>%
   plot_survdiff(est_lab = "SDR", title = "Estimated Death Incidence Difference")
 ggsave(p_survdiff_sdr, width = 12, height = 8,
-       file = here("graphs", "sdr_survdiff_est.pdf"))
+       file = here("graphs", "sdr_survdiff_est_dialysis.pdf"))
 
 p_surv_sdr_paneled <- p_surv_sdr + p_survdiff_sdr +
   plot_layout(ncol=2) + plot_annotation(tag_levels = "A")
 ggsave(p_surv_sdr_paneled, width = 20, height = 9,
-       file = here("graphs", "sdr_surv_paneled.pdf"))
+       file = here("graphs", "sdr_surv_paneled_dialysis.pdf"))
 
 # p_surv_tmle <- tmle_summary$surv_est %>%
 #   bind_rows(.id = "trt_type") %>%
