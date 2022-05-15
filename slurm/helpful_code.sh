@@ -20,7 +20,7 @@ rm -rf aki_comprisks-master/
 git init
 git clone https://github.com/dasalazarb/aki_comprisks-master.git
 
-sbatch --exclude=node150,node158,node160,node108,node109 aki_comprisks-master/slurm/lmtpcmprsk_dialysis_tmle_mtp_das.sh
+sbatch --exclude=node150,node158,node160,node108,node109 aki_comprisks-master/slurm/lmtpcmprsk_dialysis_tmle_static_das.sh
 squeue -u das4019
 sacct -u das4019
 
