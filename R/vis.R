@@ -9,7 +9,7 @@ plot_surv <- function(surv_est, est_lab,
       data = surv_est,
       aes(ymin = ci_lwr, ymax = ci_upr, color = trt_type),
       width = 0.3, linetype = "dashed"
-    )
+    ) + scale_y_continuous(breaks=100)
   } else if (attr(surv_est, "ci_type") == "simult") {
     geom_conf <- geom_ribbon(
       data = surv_est,
@@ -29,7 +29,7 @@ plot_surv <- function(surv_est, est_lab,
         x = x_lab,
         y = y_lab
       ) +
-      scale_y_continuous(breaks = seq(0, 1, by = 0.05)) +
+      scale_y_continuous(breaks = seq(0, 1, by = 0.005)) +
       scale_color_manual(
         name = legend_lab,
         values = c("#0072b5", "#bc3c29")
@@ -89,7 +89,7 @@ plot_survdiff <- function(survdiff_est, est_lab,
     geom_conf +
     geom_line() +
     geom_point(size = 5) +
-      geom_hline(yintercept = 0, linetype = "dotted") +
+      geom_hline(yintercept = 0, linetype = "dotted") + 
       labs(
         #title = title,
         title = paste0(title, " via ", est_lab),
@@ -98,6 +98,7 @@ plot_survdiff <- function(survdiff_est, est_lab,
         y = y_lab
       ) +
       theme_bw() +
+      scale_y_continuous(breaks = seq(0, 1, by = 0.005)) +
     scale_x_continuous(breaks=seq(0,14,by=1)) +
       theme( text=element_text(family="Times", size=24))
   return(p_survdiff)

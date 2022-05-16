@@ -31,24 +31,24 @@ ci_type <- "simult" #"marginal"
 # load results
 results_files <- list(
   "lmtp_mtp_sdr_tv_locf_995_k2_f2_fullcohort_20220513_dialysis.rds",
-  ".rds",
+  "lmtp_mtp_tmle_tv_locf_995_k2_f2_fullcohort_20220515_dialysis.rds",
   "lmtp_static_sdr_tv_locf_995_k2_f2_fullcohort_20220514_dialysis.rds",
-  ".rds"
+  "lmtp_static_tmle_tv_locf_995_k2_f2_fullcohort_20220516_dialysis.rds"
 )
 results_sdr_mtp <- read_rds(here("data", "results", results_files[[1]]))
-# results_tmle_mtp <- read_rds(here("data", "results", results_files[[2]]))
+results_tmle_mtp <- read_rds(here("data", "results", results_files[[2]]))
 results_sdr_static <- read_rds(here("data", "results", results_files[[3]]))
-# results_tmle_static <- read_rds(here("data", "results", results_files[[4]]))
+results_tmle_static <- read_rds(here("data", "results", results_files[[4]]))
 
 # clean up results using helper functions
 sdr_summary <- summarize_results(
   results_sdr_mtp, results_sdr_static,
   ci_level = ci_level, ci_type = ci_type
 )
-# tmle_summary <- summarize_results(
-#   results_tmle_mtp, results_tmle_static,
-#   ci_level = ci_level, ci_type = ci_type
-# )
+tmle_summary <- summarize_results(
+  results_tmle_mtp, results_tmle_static,
+  ci_level = ci_level, ci_type = ci_type
+)
 
 # create graphics of results
 p_surv_sdr <- sdr_summary$surv_est %>%
@@ -59,7 +59,7 @@ p_surv_sdr <- sdr_summary$surv_est %>%
       trt_type == "2" ~ "No intervention"
     )
   ) %>%
-  plot_surv(est_lab = "SDR", title = "Estimated Death Incidence")
+  plot_surv(est_lab = "SDR", title = "Estimated Dialysis Incidence")
 ggsave(p_surv_sdr, width = 12, height = 8,
        file = here("graphs", "sdr_surv_est_dialysis.pdf"))
 
@@ -68,7 +68,7 @@ p_survdiff_sdr <- sdr_summary$diff_est %>%
     p_adj = p.adjust(pval, "bonferroni"),
   ) %>%
   select(-std_err, -test_stat, -pval) %>%
-  plot_survdiff(est_lab = "SDR", title = "Estimated Death Incidence Difference")
+  plot_survdiff(est_lab = "SDR", title = "Estimated Dialysis Incidence Difference")
 ggsave(p_survdiff_sdr, width = 12, height = 8,
        file = here("graphs", "sdr_survdiff_est_dialysis.pdf"))
 
@@ -77,30 +77,31 @@ p_surv_sdr_paneled <- p_surv_sdr + p_survdiff_sdr +
 ggsave(p_surv_sdr_paneled, width = 20, height = 9,
        file = here("graphs", "sdr_surv_paneled_dialysis.pdf"))
 
-# p_surv_tmle <- tmle_summary$surv_est %>%
-#   bind_rows(.id = "trt_type") %>%
-#   mutate(
-#     trt_type = case_when(
-#       trt_type == "trt" ~ "Delayed intubation (MTP)",
-#       trt_type == "ctl" ~ "No intervention"
-#     )
-#   ) %>%
-#   plot_surv(est_lab = "TMLE")
-# ggsave(p_surv_tmle, width = 12, height = 8,
-#        file = here("graphs", "tmle_surv_est.pdf"))
+#####################################################################################
+p_surv_tmle <- tmle_summary$surv_est %>%
+  bind_rows(.id = "trt_type") %>%
+  mutate(
+    trt_type = case_when(
+      trt_type == "trt" ~ "Delayed intubation (MTP)",
+      trt_type == "ctl" ~ "No intervention"
+    )
+  ) %>%
+  plot_surv(est_lab = "TMLE")
+ggsave(p_surv_tmle, width = 12, height = 8,
+       file = here("graphs", "tmle_surv_est_dialysis.pdf"))
 
-# p_survdiff_tmle <- tmle_summary$diff_est %>%
-#   mutate(
-#     p_adj = p.adjust(pval, "bonferroni"),
-#   ) %>%
-#   select(-std_err, -test_stat, -pval) %>%
-#   plot_survdiff(est_lab = "TMLE")
-# ggsave(p_survdiff_tmle, width = 12, height = 8,
-#        file = here("graphs", "tmle_survdiff_est.pdf"))
+p_survdiff_tmle <- tmle_summary$diff_est %>%
+  mutate(
+    p_adj = p.adjust(pval, "bonferroni"),
+  ) %>%
+  select(-std_err, -test_stat, -pval) %>%
+  plot_survdiff(est_lab = "TMLE")
+ggsave(p_survdiff_tmle, width = 12, height = 8,
+       file = here("graphs", "tmle_survdiff_est_dialysis.pdf"))
 
-# p_surv_tmle_paneled <- (p_surv_tmle + xlab("")) | p_survdiff_tmle
-# ggsave(p_surv_tmle_paneled, width = 20, height = 12,
-#        file = here("graphs", "tmle_surv_paneled.pdf"))
+p_surv_tmle_paneled <- (p_surv_tmle + xlab("")) | p_survdiff_tmle
+ggsave(p_surv_tmle_paneled, width = 20, height = 12,
+       file = here("graphs", "tmle_surv_paneled_dialysis.pdf"))
 
 # # create tables of results
 # tab_survdiff_sdr <- sdr_summary$diff_est %>%
